@@ -17,6 +17,7 @@ dofile(modpath.."/pillager_outpost.lua")
 dofile(modpath.."/end_spawn.lua")
 dofile(modpath.."/end_city.lua")
 dofile(modpath.."/ancient_hermitage.lua")
+dofile(modpath.."/trial_chamber.lua")
 
 
 vlf_structures.register_structure("desert_well",{

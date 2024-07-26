@@ -27,7 +27,7 @@ vlf_trials.register_vault("vault",{
 			"vlf_trials_vault_side_ejecting.png", "vlf_trials_vault_front_ejecting.png",
 		},
 	},
-	loot ={
+	loot = {
 		{
 			stacks_min = 1,
 			stacks_max = 1,
@@ -78,7 +78,7 @@ vlf_trials.register_vault("vault",{
 				--{ itemstring = "TODO:vlf_armor:bolt", weight = 3, func = function(stack, pr) vlf_enchanting.enchant_uniform_randomly(stack, {"soul_speed"}, pr) end },
 				{ itemstring = "vlf_jukebox:record_8", weight = 2 },
 				--{ itemstring = "TODO:vlf_banners:pattern_guster", weight = 2 },
-				--{ itemstring = "TODO:tridentr", weight = 1 },
+				--{ itemstring = "TODO:trident", weight = 1 },
 			}
 		}
 }
