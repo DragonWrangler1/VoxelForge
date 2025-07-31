@@ -1,0 +1,12 @@
+# This is a placeholder for the crack texture
+# In a real implementation, this would be a PNG file with 5 vertical frames
+# showing progressive cracking stages from 0 (no cracks) to 4 (almost broken)
+# 
+# The texture should be 16x80 pixels (16x16 per frame, 5 frames vertically)
+# Frame 0: No cracks (transparent or very light lines)
+# Frame 1: Small cracks
+# Frame 2: Medium cracks  
+# Frame 3: Large cracks
+# Frame 4: Very large cracks, almost broken
+#
+# For now, this file serves as a placeholder to prevent texture loading errors
