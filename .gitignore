@@ -1,0 +1,20 @@
+# IDE files
+.vscode/
+.idea/
+
+# Zencoder files
+.zencoder/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
