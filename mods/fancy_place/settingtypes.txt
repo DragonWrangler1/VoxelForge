@@ -1,0 +1,37 @@
+# Fancy Place Mod Settings
+# Simple horizontal placement mod for placing blocks next to other blocks horizontally
+
+[Ghost Block Appearance]
+
+# Ghost block opacity (0 = fully transparent, 255 = fully opaque)
+fancy_place_ghost_opacity (Ghost Block Opacity) int 128 0 255
+
+# Ghost block glow intensity (0 = no glow, 15 = very bright)
+fancy_place_ghost_glow (Ghost Block Glow) int 8 0 15
+
+# Ghost block size multiplier (1.0 = normal size, 1.05 = 5% bigger)
+fancy_place_ghost_size (Ghost Block Size) float 1.02 1.0 1.1
+
+[Placement Behavior]
+
+# How far you can detect and place ghost blocks (in nodes)
+fancy_place_reach_distance (Reach Distance) float 4.5 1.0 4.5
+
+# Allow diagonal ghost block placement (in addition to cardinal directions)
+fancy_place_allow_diagonal (Allow Diagonal Placement) bool true
+
+# Play sound when placing blocks through ghost blocks
+fancy_place_play_sounds (Play Placement Sounds) bool true
+
+[Performance Settings]
+
+# How often to update ghost blocks (in seconds, lower = more responsive)
+fancy_place_update_interval (Update Interval) float 0.2 0.05 1.0
+
+# Update ghost blocks instantly when changing items (disable for better performance)
+fancy_place_instant_updates (Instant Updates) bool true
+
+[Debug Settings]
+
+# Show configuration info in server log
+fancy_place_show_config (Show Config in Log) bool false
