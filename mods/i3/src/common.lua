@@ -81,7 +81,7 @@ local function utf8_len(str)
 	local c = 0
 
 	for _ in str:gmatch"[%z\1-\127\194-\244][\128-\191]*" do -- Arguably working duct-tape code
-		c = c + 1
+		c++
 	end
 
 	return c
@@ -89,8 +89,8 @@ end
 
 local function get_bag_description(data, stack)
 	local desc = translate(data.lang_code, stack:get_description())
-		  desc = split(desc, "(")[1] or desc
-		  desc = toupper(desc:trim())
+	      desc = split(desc, "(")[1] or desc
+	      desc = toupper(desc:trim())
 
 	return desc
 end
@@ -135,7 +135,7 @@ local function search(data)
 						temp[item] = true
 					end
 
-					j = j + 1
+					j++
 				end
 			end
 		else
@@ -154,7 +154,7 @@ local function search(data)
 		end
 
 		if to_add then
-			c = c + 1
+			c++
 			filtered_list[c] = item
 		end
 	end
@@ -182,7 +182,7 @@ local function table_merge(t1, t2, hash)
 		local c = #t1
 
 		for i = 1, #t2 do
-			c = c + 1
+			c++
 			t1[c] = t2[i]
 		end
 	end
@@ -208,7 +208,7 @@ local function array_diff(t1, t2)
 	for i = 1, #t1 do
 		local v = t1[i]
 		if hash[v] then
-			c = c + 1
+			c++
 			diff[c] = v
 		end
 	end
@@ -372,9 +372,9 @@ local function sort_by_category(data)
 end
 
 local function spawn_item(player, stack)
-	local dir	 = player:get_look_dir()
-	local ppos	= player:get_pos()
-		  ppos.y  = ppos.y + player:get_properties().eye_height
+	local dir     = player:get_look_dir()
+	local ppos    = player:get_pos()
+	      ppos.y  = ppos.y + player:get_properties().eye_height
 	local look_at = ppos + dir
 
 	core.add_item(look_at, stack)
@@ -395,7 +395,7 @@ local function get_recipes(player, item)
 	local no_usages = not usages or #usages == 0
 
 	return not no_recipes and recipes or nil,
-		   not no_usages  and usages  or nil
+	       not no_usages  and usages  or nil
 end
 
 local function get_stack(player, stack)
@@ -418,7 +418,7 @@ local function craft_stack(player, data, craft_rcp)
 	local rcp_usg = craft_rcp and "recipe" or "usage"
 	local rcp_def = rcp_usg == "recipe" and data.recipes[data.rnum] or data.usages[data.unum]
 	local output = craft_rcp and data.recipes[data.rnum].output or data.usages[data.unum].output
-		  output = ItemStack(output)
+	      output = ItemStack(output)
 	local stackname, stackcount, stackmax = output:get_name(), output:get_count(), output:get_stack_max()
 	local scrbar_val = data[fmt("scrbar_%s", craft_rcp and "rcp" or "usg")] or 1
 
@@ -435,7 +435,7 @@ local function craft_stack(player, data, craft_rcp)
 					if item == _name and remaining > 0 then
 						local c = min(remaining, _count)
 						items[item] = c
-						remaining = remaining - (c)
+						remaining -= c
 					end
 
 					if remaining == 0 then break end
@@ -474,7 +474,7 @@ local function craft_stack(player, data, craft_rcp)
 		local c = min(stackmax, leftover)
 		local stack = ItemStack(fmt("%s %s", stackname, c))
 		get_stack(player, stack)
-		leftover = leftover - (stackmax)
+		leftover -= stackmax
 	end
 end
 
@@ -490,7 +490,7 @@ local function safe_teleport(player, pos)
 	player:add_velocity(-vel)
 
 	local p = vec(pos)
-		  p.y = p.y + (0.25)
+	      p.y += 0.25
 
 	player:set_pos(p)
 end
@@ -538,20 +538,20 @@ local function compress_items(list, start_i)
 	local hash, new_inv, special = {}, {}, {}
 
 	for i = start_i, #list do
-		local stack	= list[i]
-		local name	 = stack:get_name()
-		local count	= stack:get_count()
+		local stack    = list[i]
+		local name     = stack:get_name()
+		local count    = stack:get_count()
 		local stackmax = stack:get_stack_max()
-		local empty	= stack:is_empty()
-		local meta	 = stack:get_meta():to_table()
-		local wear	 = stack:get_wear() > 0
+		local empty    = stack:is_empty()
+		local meta     = stack:get_meta():to_table()
+		local wear     = stack:get_wear() > 0
 
 		if not empty then
 			if next(meta.fields) or wear or count >= stackmax then
 				insert(special, stack)
 			else
 				hash[name] = hash[name] or 0
-				hash[name] = hash[name] + (count)
+				hash[name] += count
 			end
 		end
 	end
@@ -563,7 +563,7 @@ local function compress_items(list, start_i)
 
 		for _ = 1, iter do
 			insert(new_inv, ItemStack(fmt("%s %u", name, min(stackmax, leftover))))
-			leftover = leftover - (stackmax)
+			leftover -= stackmax
 		end
 	end
 
@@ -594,25 +594,25 @@ local function sort_inventory(player, data)
 end
 
 local function reset_data(data)
-	data.filter		= ""
-	data.expand		= ""
-	data.pagenum	   = 1
-	data.rnum		  = 1
-	data.unum		  = 1
-	data.scrbar_rcp	= 1
-	data.scrbar_usg	= 1
-	data.query_item	= nil
+	data.filter        = ""
+	data.expand        = ""
+	data.pagenum       = 1
+	data.rnum          = 1
+	data.unum          = 1
+	data.scrbar_rcp    = 1
+	data.scrbar_usg    = 1
+	data.query_item    = nil
 	data.enable_search = nil
-	data.goto_page	 = nil
-	data.recipes	   = nil
-	data.usages		= nil
+	data.goto_page     = nil
+	data.recipes       = nil
+	data.usages        = nil
 	data.crafting_rcp  = nil
 	data.crafting_usg  = nil
-	data.alt_items	 = nil
+	data.alt_items     = nil
 	data.confirm_trash = nil
 	data.show_settings = nil
 	data.show_setting  = "home"
-	data.items		 = data.items_raw
+	data.items         = data.items_raw
 
 	if data.itab and data.itab > 1 then
 		sort_by_category(data)
@@ -636,33 +636,33 @@ local function init_hud_notif(player)
 	return {
 		bg = player:hud_add {
 			hud_elem_type = "image",
-			position	  = {x = 0,   y = 1},
-			offset		= {x = 10,  y = 0},
-			alignment	 = {x = 1,   y = 1},
-			scale		 = {x = 0.6, y = 0.6},
-			text		  = "i3_bg_notif.png",
-			z_index	   = 0xDEAD,
+			position      = {x = 0,   y = 1},
+			offset        = {x = 10,  y = 0},
+			alignment     = {x = 1,   y = 1},
+			scale         = {x = 0.6, y = 0.6},
+			text          = "i3_bg_notif.png",
+			z_index       = 0xDEAD,
 		},
 
 		img = player:hud_add {
 			hud_elem_type = "image",
-			position	  = {x = 0,  y = 1},
-			offset		= {x = 20, y = 20},
-			alignment	 = {x = 1,  y = 1},
-			scale		 = {x = 1,  y = 1},
-			text		  = "",
-			z_index	   = 0xDEAD,
+			position      = {x = 0,  y = 1},
+			offset        = {x = 20, y = 20},
+			alignment     = {x = 1,  y = 1},
+			scale         = {x = 1,  y = 1},
+			text          = "",
+			z_index       = 0xDEAD,
 		},
 
 		text = player:hud_add {
 			hud_elem_type = "text",
-			position	  = {x = 0,   y = 1},
-			offset		= {x = 100, y = 40},
-			alignment	 = {x = 1,   y = 1},
-			number		= 0xffffff,
-			text		  = "",
-			z_index	   = 0xDEAD,
-			style		 = 1,
+			position      = {x = 0,   y = 1},
+			offset        = {x = 100, y = 40},
+			alignment     = {x = 1,   y = 1},
+			number        = 0xffffff,
+			text          = "",
+			z_index       = 0xDEAD,
+			style         = 1,
 		}
 	}
 end

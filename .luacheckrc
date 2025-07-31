@@ -103,6 +103,10 @@ files = {
 	},
 }
 
+exclude_files = {
+    "mods/i3",
+}
+
 -- Maximum line length
 max_line_length = 120
 

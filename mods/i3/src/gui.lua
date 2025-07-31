@@ -37,7 +37,7 @@ local function weird_desc(str)
 end
 
 local function snip(str, limit, font_size)
-	limit = limit - ((font_size > 3 and font_size + 1 or font_size))
+	limit -= (font_size > 3 and font_size + 1 or font_size)
 
 	if utf8_len(str) > limit then
 		return fmt("%s...", sub(str, 1, limit - 3))
@@ -55,7 +55,7 @@ local function get_desc(item, lang_code)
 	end
 
 	local desc = ItemStack(item):get_short_description()
-		  desc = translate(lang_code, desc)
+	      desc = translate(lang_code, desc)
 
 	if true_str(desc) then
 		desc = desc:trim():gsub("_", " ")
@@ -190,7 +190,7 @@ local function get_award_list(data, fs, ctn_len, yextra, award_list, awards_unlo
 			insert(fs, "style_type[label;font_size=14]")
 			insert(fs, fmt("label", icon_size + 0.55, y + 0.97, fmt("%u / %u", current, target)))
 
-			y = y - (0.14)
+			y -= 0.14
 		end
 
 		local end_title = ESC(_title or title)
@@ -235,7 +235,7 @@ local function get_isometric_view(fs, pos, X, Y, t, cubes, depth, high)
 
 		if img then
 			local p = area:position(idx)
-				  p = p - (pos)
+			      p -= pos
 
 			local size = 0.25
 			local x = 2 + (size / 2 * (p.z - p.x))
@@ -246,10 +246,10 @@ local function get_isometric_view(fs, pos, X, Y, t, cubes, depth, high)
 			end
 
 			if plant then
-				size = size - (0.05)
+				size -= 0.05
 			end
 
-			cubes = cubes + 1
+			cubes++
 			insert(t[depth], {x + X, y + Y, size, size, img})
 		end
 	end
@@ -258,7 +258,7 @@ local function get_isometric_view(fs, pos, X, Y, t, cubes, depth, high)
 
 	if cubes < maxc and depth > max_depth then
 		-- if there's not enough map to preview, go deeper
-		depth = depth - (1)
+		depth -= 1
 		return get_isometric_view(fs, pos, X, Y, t, cubes, depth, high)
 	end
 
@@ -270,13 +270,13 @@ local function get_isometric_view(fs, pos, X, Y, t, cubes, depth, high)
 			dth[0] = #dth
 			for j = 1, dth[0] do
 				local params = dth[j]
-					  params[2] = params[2] + (shift)
+				      params[2] += shift
 				insert(fs, fmt("image[%f,%f;%.1f,%.1f;%s]", unpack(params)))
 			end
 		end
 	end
 
-	shift = shift + ((base_depth and 0.45 or 0.95))
+	shift += (base_depth and 0.45 or 0.95)
 	animated_image(2.75, Y + shift, 3/14, 0.3, "i3_flag_anim.png", 4, 150)
 end
 
@@ -425,7 +425,7 @@ local function get_container(fs, data, player, yoffset, ctn_len, award_list, awa
 				(half == 1 and i == floor(hearts)) and PNG.heart_half or PNG.heart)
 		end
 	else
-		yoffset = yoffset - (0.5)
+		yoffset -= 0.5
 	end
 
 	fs("list[current_player;craft;%f,%f;3,3;]", 0, yoffset + 1.45)
@@ -509,7 +509,7 @@ local function get_container(fs, data, player, yoffset, ctn_len, award_list, awa
 
 		if #_skins > spp then
 			local btn_y = yextra + 0.75
-			add_y = add_y + (0.6)
+			add_y += 0.6
 
 			data.skin_pagemax = max(1, ceil(#_skins / spp))
 
@@ -537,7 +537,7 @@ local function get_container(fs, data, player, yoffset, ctn_len, award_list, awa
 			local X = (i % 3) * 1.93
 
 			local Y = ceil((i % spp - X) / 3 + 1)
-				  Y = Y + ((Y * 2.45) + yextra - 2.75 + add_y)
+			      Y += (Y * 2.45) + yextra - 2.75 + add_y
 
 			image_button(X, Y, 1.86, 3.4, "", btn_name, "")
 			fs("tooltip[%s;%s;#32333899;#fff]", btn_name, ESC(skin.name))
@@ -598,7 +598,7 @@ local function show_settings(fs, data)
 			if data.home then
 				str = data.home:gsub(",", "  "):sub(2,-2):gsub("%.%d", ""):gsub(
 					"(%-?%d+)", function(a)
-						c = c + 1
+						c++
 						return fmt("<b>%s: <style color=%s font=mono>%s</style></b>",
 							coords[c], colors.blue, a)
 					end)
@@ -672,10 +672,10 @@ end
 
 local function get_footer(fs, data)
 	local btn = {
-		{"trash",	FS("Clear inventory")},
-		{"sort",	 FS("Sort inventory")},
+		{"trash",    FS("Clear inventory")},
+		{"sort",     FS("Sort inventory")},
 		{"settings", FS("Settings")},
-		{"home",	 FS("Go home")},
+		{"home",     FS("Go home")},
 	}
 
 	for i, v in ipairs(btn) do
@@ -744,18 +744,18 @@ local function get_inventory_fs(player, data, fs)
 
 	local awards_unlocked, award_list, award_list_nb = 0
 	local max_val = damage_enabled and 12 or 7
-		  max_val = max_val + ((data.legacy_inventory and 2 or 0))
+	      max_val += (data.legacy_inventory and 2 or 0)
 	local bag_size = get_group(ItemStack(data.bag):get_name(), "bag")
 
 	if data.subcat == 1 and bag_size > 0 then
-		max_val = max_val + (min(32, 6 + ((bag_size - 1) * 10)))
+		max_val += min(32, 6 + ((bag_size - 1) * 10))
 
 	elseif i3.modules.armor and data.subcat == 2 then
 		if data.scrbar_inv >= max_val then
-			data.scrbar_inv = data.scrbar_inv + (10)
+			data.scrbar_inv += 10
 		end
 
-		max_val = max_val + (10)
+		max_val += 10
 
 	elseif i3.modules.skins and data.subcat == 3 then
 		local spp = 24
@@ -763,7 +763,7 @@ local function get_inventory_fs(player, data, fs)
 		local nb = #_skins
 		local num = max(1, min(spp, nb - ((data.skin_pagenum - 1) * spp)))
 
-		max_val = max_val + (ceil(num / 3) * (nb > spp and 34 or 31))
+		max_val += ceil(num / 3) * (nb > spp and 34 or 31)
 
 	elseif i3.modules.awards and data.subcat == 4 then
 		award_list = awards.get_award_states(data.player_name)
@@ -772,17 +772,17 @@ local function get_inventory_fs(player, data, fs)
 		for i = 1, award_list_nb do
 			local award = award_list[i]
 			if award.unlocked then
-				awards_unlocked = awards_unlocked + 1
+				awards_unlocked++
 			end
 		end
 
-		max_val = max_val + ((award_list_nb * 13))
+		max_val += (award_list_nb * 13)
 
 	elseif data.subcat == 5 then
 		local wp = #data.waypoints
 		if wp > 0 then
 			local mul = (wp > 8 and 7) or (wp > 4 and 6) or 5
-			max_val = max_val + (11 + (wp * mul))
+			max_val += 11 + (wp * mul)
 		end
 	end
 
@@ -882,7 +882,7 @@ local function get_true_count(data, count, is_recipe, is_usage)
 	end
 
 	if count_mul then
-		count = count * count_mul
+		count *= count_mul
 	end
 
 	return count
@@ -969,11 +969,11 @@ local function get_output_fs(fs, data, rcp, is_recipe, is_usage, shapeless, righ
 
 	local infos = {
 		unknown   = unknown,
-		weird	 = weird,
+		weird     = weird,
 		burntime  = burntime,
-		repair	= repairable(name),
-		rarity	= rcp.rarity,
-		tools	 = rcp.tools,
+		repair    = repairable(name),
+		rarity    = rcp.rarity,
+		tools     = rcp.tools,
 		meta_desc = meta_desc,
 	}
 
@@ -1005,7 +1005,7 @@ local function get_grid_fs(fs, data, rcp, is_recipe, is_usage)
 
 	for i = 1, width * rows do
 		local item  = rcp.items[i] or ""
-			  item  = ItemStack(item)
+		      item  = ItemStack(item)
 		local meta  = item:get_meta()
 		local name  = item:get_name()
 		local count = item:get_count()
@@ -1033,10 +1033,10 @@ local function get_grid_fs(fs, data, rcp, is_recipe, is_usage)
 			Y = btn_size * yi + data.yoffset + 0.2 + (yi * 0.05) + add_y
 		else
 			X = ceil((i - 1) % width - width)
-			X = X + ((X * 0.2) + data.inv_width + 3.9)
+			X += (X * 0.2) + data.inv_width + 3.9
 
 			Y = ceil(i / width) - min(2, rows)
-			Y = Y + ((Y * 0.15) + data.yoffset + 1.4)
+			Y += (Y * 0.15) + data.yoffset + 1.4
 		end
 
 		if X > right then
@@ -1112,7 +1112,7 @@ local function get_grid_fs(fs, data, rcp, is_recipe, is_usage)
 
 		local def = reg_items[name]
 		local unknown = not def or nil
-			  unknown = not groups and unknown or nil
+		      unknown = not groups and unknown or nil
 		local desc = def and def.description
 		local weird = name ~= "" and desc and weird_desc(desc) or nil
 		local burntime = i3.fuel_cache[name] and i3.fuel_cache[name].burntime
@@ -1123,8 +1123,8 @@ local function get_grid_fs(fs, data, rcp, is_recipe, is_usage)
 
 		local infos = {
 			unknown   = unknown,
-			weird	 = weird,
-			groups	= groups,
+			weird     = weird,
+			groups    = groups,
 			burntime  = burntime,
 			cooktime  = cooktime,
 			replace   = replace,
@@ -1247,7 +1247,7 @@ local function get_header(fs, data)
 
 	local desc_lim, name_lim = 34, 35
 	local desc = get_desc(data.query_item, data.lang_code)
-		  desc = ESC(desc)
+	      desc = ESC(desc)
 	local tech_name = data.query_item
 	local X = data.inv_width + 0.95
 	local Y1 = data.yoffset + 0.47
@@ -1512,7 +1512,7 @@ local function get_minitabs(fs, data, player, full_height)
 	local tab_len, tab_hgh, i = 1.8, 0.5, 0
 
 	for id, title in pairs(minitabs) do
-		i = i + 1
+		i++
 		local top = i > 3
 		local X = top and i - 3 or i
 		local selected = id == data.itab
@@ -1568,10 +1568,10 @@ local function get_items_fs(fs, data, player, full_height)
 			local name = _compressed and item:sub(2) or item
 
 			local X = i % rows
-				  X = X - ((X * 0.045) + data.inv_width + 0.28)
+			      X -= (X * 0.045) + data.inv_width + 0.28
 
 			local Y = round((i % ipp - X) / rows + 1, 0)
-				  Y = Y - ((Y * 0.085) + 0.92)
+			      Y -= (Y * 0.085) + 0.92
 
 			local item_btn = fmt("item_image_button", X, Y, size, size, name, item, "")
 
@@ -1628,7 +1628,7 @@ end
 
 local function get_panels(fs, data, player)
 	local title   = {name = "title", height = 1.4, func = get_header}
-	local favs	= {name = "favs", height = 2.23, func = get_favs}
+	local favs    = {name = "favs", height = 2.23, func = get_favs}
 	local recipes = {name = "recipes", rcp = data.recipes, height = 4.045, func = get_rcp_extra}
 	local usages  = {name = "usages", rcp = data.usages, height = 4.045, func = get_rcp_extra}
 	local panels  = {title, recipes, usages, favs}
@@ -1636,7 +1636,7 @@ local function get_panels(fs, data, player)
 
 	for i, panel in ipairs(panels) do
 		if i > 1 then
-			data.yoffset = data.yoffset + (panels[i - 1].height + 0.1)
+			data.yoffset += panels[i - 1].height + 0.1
 		end
 
 		bg9(data.inv_width + 0.1, data.yoffset, 7.9, panel.height, PNG.bg_full)
@@ -1699,7 +1699,7 @@ local function get_tabs_fs(fs, player, data, full_height)
 			fs"style_type[image;noclip=false]"
 		end
 
-		c = c + 1
+		c++
 	end
 end
 
@@ -1714,7 +1714,7 @@ local function get_debug_grid(data, fs, full_height)
 	for x = 0, data.inv_width + 8, spacing do
 		box(x, 0, 0.01, full_height, "#ff0")
 		label(x, full_height + 0.1, tostring(i))
-		i = i + 1
+		i++
 	end
 
 	i = 61
@@ -1722,7 +1722,7 @@ local function get_debug_grid(data, fs, full_height)
 	for y = 0, full_height, spacing do
 		box(0, y, data.inv_width + 8, 0.01, "#ff0")
 		label(-0.15, y, tostring(i))
-		i = i - (1)
+		i -= 1
 	end
 
 	box(data.inv_width / 2, 0, 0.01, full_height, "#f00")
@@ -1783,7 +1783,7 @@ local function make_fs(player, data)
 
 	for _, def in ipairs(i3.tabs) do
 		if def.access and not def.access(player, data) then
-			visible_tabs = visible_tabs - (1)
+			visible_tabs -= 1
 		end
 	end
 

@@ -2,8 +2,6 @@
 -- Simple block placement system - shows ghost blocks next to blocks (not on top or below)
 -- Right-click ghost blocks to place them
 
-local _modname = minetest.get_current_modname()
-
 -- Simple configuration
 fancy_place = {
 	reach_distance = tonumber(minetest.settings:get("fancy_place_reach_distance")) or 4.5,

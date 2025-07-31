@@ -49,7 +49,7 @@ local function cache_groups(group, groups)
 		if texture then
 			texture = texture:gsub("%^", "\\^"):gsub(":", "\\:") .. fmt("\\^[resize\\:%ux%u", px, px)
 			sprite = sprite .. fmt(":0,%u=%s", c * px, texture)
-			c = c + 1
+			c++
 			if c == lim then break end
 		end
 	end
@@ -145,7 +145,7 @@ local function drop_table(name, drop)
 		end
 
 		if not di.rarity then
-			count_sure = count_sure + 1
+			count_sure++
 		end
 	end
 end
@@ -258,7 +258,7 @@ local function resolve_aliases(hash)
 
 				for j = 1, #i3.recipes_cache[newname] do
 					local rcp_new = copy(i3.recipes_cache[newname][j])
-						  rcp_new.output = oldname
+					      rcp_new.output = oldname
 
 					if table_eq(rcp_old, rcp_new) then
 						similar = true

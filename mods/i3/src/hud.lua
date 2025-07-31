@@ -7,9 +7,9 @@ local function init_hud(player)
 	local wdesc_y = -90
 
 	if core.global_exists"hb" then
-		wdesc_y = wdesc_y - (ceil(hb.hudbars_count / 2) * 5)
+		wdesc_y -= ceil(hb.hudbars_count / 2) * 5
 	elseif not i3.settings.damage_enabled then
-		wdesc_y = wdesc_y + (15)
+		wdesc_y += 15
 	end
 
 	data.hud = {
@@ -17,13 +17,13 @@ local function init_hud(player)
 
 		wielditem = player:hud_add {
 			hud_elem_type = "text",
-			position	  = {x = 0.5, y = 1},
-			offset		= {x = 0,   y = wdesc_y},
-			alignment	 = {x = 0,   y = -1},
-			number		= 0xffffff,
-			text		  = "",
-			z_index	   = 0xDEAD,
-			style		 = 1,
+			position      = {x = 0.5, y = 1},
+			offset        = {x = 0,   y = wdesc_y},
+			alignment     = {x = 0,   y = -1},
+			number        = 0xffffff,
+			text          = "",
+			z_index       = 0xDEAD,
+			style         = 1,
 		}
 	}
 end
@@ -39,7 +39,7 @@ local function show_hud(player, data, notif, idx, dt)
 
 	if offset.y < notif.max.y then
 		notif.show = false
-		notif.hud_timer = notif.hud_timer + (dt)
+		notif.hud_timer += dt
 	end
 
 	player:hud_change(notif.elems.text, "text", notif.hud_msg)
@@ -120,8 +120,8 @@ core.register_globalstep(function(dt)
 		local meta = wielditem:get_meta()
 
 		local meta_desc = meta:get_string"short_description"
-			  meta_desc = meta_desc:gsub("\27", "")
-			  meta_desc = core.strip_colors(meta_desc)
+		      meta_desc = meta_desc:gsub("\27", "")
+		      meta_desc = core.strip_colors(meta_desc)
 
 		local desc = meta_desc ~= "" and meta_desc or wielditem:get_short_description()
 		player:hud_change(data.hud.wielditem, "text", desc:trim())

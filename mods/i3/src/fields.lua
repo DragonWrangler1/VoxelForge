@@ -50,7 +50,7 @@ local function inv_fields(player, data, fields)
 
 		elseif find(field, "waypoint_%d+") then
 			local id, action = match(field, "_(%d+)_(%w+)$")
-				  id = tonumber(id)
+			      id = tonumber(id)
 			local waypoint = data.waypoints[id]
 			if not waypoint then return end
 
@@ -155,7 +155,7 @@ local function inv_fields(player, data, fields)
 		local desc = translate(data.lang_code, bagstack:get_description())
 		local fill = split(desc, "(")[2]
 		local newname = fields.bag_newname:gsub("([%(%)])", "")
-			  newname = toupper(newname:trim())
+		      newname = toupper(newname:trim())
 
 		if fill then
 			newname = fmt("%s (%s", newname, fill)
@@ -197,10 +197,10 @@ local function inv_fields(player, data, fields)
 			name  = waypoint,
 			pos   = pos_to_str(pos, 1),
 			color = color,
-			id	= id,
+			id    = id,
 		})
 
-		data.scrbar_inv = data.scrbar_inv + (1000)
+		data.scrbar_inv += 1000
 
 	elseif fields.hide_debug_grid then
 		data.hide_debug_grid = not data.hide_debug_grid
@@ -260,7 +260,7 @@ local function select_item(player, data, fields)
 				for _, v in ipairs(items) do
 					if valid_item(reg_items[clean_name(v)]) then
 						insert(data.alt_items, idx + i, v)
-						i = i + 1
+						i++
 					end
 				end
 			end
@@ -278,7 +278,7 @@ local function select_item(player, data, fields)
 		if core.is_creative_enabled(data.player_name) then
 			local stack = ItemStack(item)
 			local stackmax = stack:get_stack_max()
-				  stack = fmt("%s %s", item, stackmax)
+			      stack = fmt("%s %s", item, stackmax)
 
 			return get_stack(player, stack)
 		end
@@ -287,10 +287,10 @@ local function select_item(player, data, fields)
 		local recipes, usages = get_recipes(player, item)
 
 		data.query_item   = item
-		data.recipes	  = recipes
-		data.usages	   = usages
-		data.rnum		 = 1
-		data.unum		 = 1
+		data.recipes      = recipes
+		data.usages       = usages
+		data.rnum         = 1
+		data.unum         = 1
 		data.scrbar_rcp   = 1
 		data.scrbar_usg   = 1
 		data.crafting_rcp = nil
@@ -346,7 +346,7 @@ local function rcp_fields(player, data, fields)
 
 	elseif fields.prev_page or fields.next_page then
 		if data.pagemax == 1 then return end
-		data.pagenum = data.pagenum - ((fields.prev_page and 1 or -1))
+		data.pagenum -= (fields.prev_page and 1 or -1)
 
 		if data.pagenum > data.pagemax then
 			data.pagenum = 1
@@ -356,7 +356,7 @@ local function rcp_fields(player, data, fields)
 
 	elseif fields.prev_skin or fields.next_skin then
 		if data.skin_pagemax == 1 then return end
-		data.skin_pagenum = data.skin_pagenum - ((fields.prev_skin and 1 or -1))
+		data.skin_pagenum -= (fields.prev_skin and 1 or -1)
 
 		if data.skin_pagenum > data.skin_pagemax then
 			data.skin_pagenum = 1

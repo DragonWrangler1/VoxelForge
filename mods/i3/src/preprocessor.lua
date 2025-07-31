@@ -1,4 +1,4 @@
---[[	All source files have to be preprocessed before loading.
+--[[    All source files have to be preprocessed before loading.
 	This allows implementing custom operators like bitwise ones.	]]
 
 local fmt, split = string.format, string.split

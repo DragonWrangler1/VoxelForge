@@ -2,7 +2,7 @@ local JSON = require"JSON" -- luarocks install json-lua
 os.execute "clear"
 
 local list = io.popen("curl -s -H 'Accept: text/html' http://servers.minetest.net/list"):read("*a")
-	  list = JSON:decode(list).list
+      list = JSON:decode(list).list
 
 local servers = {}
 

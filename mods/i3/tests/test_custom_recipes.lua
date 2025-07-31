@@ -58,7 +58,7 @@ i3.register_craft {
 	result = "default:cobble 16",
 	items = {
 		"default:stone, default:stone",
-		"default:stone,			  , default:stone",
+		"default:stone,              , default:stone",
 		", default:stone, default:stone",
 	}
 }
