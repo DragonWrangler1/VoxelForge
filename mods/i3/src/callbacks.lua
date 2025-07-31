@@ -212,21 +212,21 @@ local function init_data(player, info)
 		data[k] = val
 	end
 
-	data.player_name     = name
-	data.filter          = ""
-	data.pagenum         = 1
-	data.skin_pagenum    = 1
-	data.items           = i3.init_items
-	data.items_raw       = i3.init_items
-	data.favs            = {}
-	data.show_setting    = "home"
+	data.player_name	 = name
+	data.filter		  = ""
+	data.pagenum		 = 1
+	data.skin_pagenum	= 1
+	data.items		   = i3.init_items
+	data.items_raw	   = i3.init_items
+	data.favs			= {}
+	data.show_setting	= "home"
 	data.crafting_counts = {}
-	data.tab             = 1
-	data.itab            = 1
-	data.subcat          = 1
-	data.scrbar_inv      = 0
-	data.lang_code       = get_lang_code(info)
-	data.fs_version      = info.formspec_version
+	data.tab			 = 1
+	data.itab			= 1
+	data.subcat		  = 1
+	data.scrbar_inv	  = 0
+	data.lang_code	   = get_lang_code(info)
+	data.fs_version	  = info.formspec_version
 
 	update_inv_size(player, data)
 

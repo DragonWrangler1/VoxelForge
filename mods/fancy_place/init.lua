@@ -2,7 +2,7 @@
 -- Simple block placement system - shows ghost blocks next to blocks (not on top or below)
 -- Right-click ghost blocks to place them
 
-local modname = minetest.get_current_modname()
+local _modname = minetest.get_current_modname()
 
 -- Simple configuration
 fancy_place = {
@@ -311,7 +311,7 @@ minetest.register_entity("fancy_place:ghost_block", {
 			wielded:take_item()
 			clicker:set_wielded_item(wielded)
 		end
-		
+
 		-- Remove the ghost block
 		remove_ghost_block(player_name)
 	end,
@@ -322,11 +322,11 @@ local function get_player_pointed_thing(player)
 	local eye_pos = vector.add(player:get_pos(), {x = 0, y = 1.5, z = 0})
 	local look_dir = player:get_look_dir()
 	local end_pos = vector.add(eye_pos, vector.multiply(look_dir, fancy_place.reach_distance))
-	
+
 	-- Perform raycast
 	local raycast = minetest.raycast(eye_pos, end_pos, false, false)
 	local pointed_thing = raycast:next()
-	
+
 	if pointed_thing then
 		return pointed_thing
 	else
@@ -341,20 +341,20 @@ local function update_ghost_preview()
 		local player_name = player:get_player_name()
 		local wielded = player:get_wielded_item()
 		local item_name = wielded:get_name()
-		
+
 		-- Check if player is holding a placeable item
 		if item_name ~= "" and minetest.registered_nodes[item_name] then
 			-- Get actual pointed_thing from raycast
 			local pointed_thing = get_player_pointed_thing(player)
-			
+
 			-- Try to find a horizontal placement position
 			local place_pos, _ = find_horizontal_placement_pos(player, pointed_thing)
-			
+
 			if place_pos then
 				-- Update or create ghost block
 				local current_ghost = fancy_place.ghost_blocks[player_name]
 				local needs_update = true
-				
+
 				if current_ghost then
 					local current_pos = current_ghost:get_pos()
 					if current_pos and vector.equals(current_pos, place_pos) then
@@ -397,6 +397,6 @@ minetest.register_on_mods_loaded(function()
 			update_ghost_preview()
 		end
 	end)
-	
+
 	minetest.log("action", "[fancy_place] Simple horizontal placement mod loaded successfully")
 end)

@@ -108,21 +108,21 @@ local styles = string.format([[
 	style[bag_rename;fgimg=%s;fgimg_hovered=%s;content_offset=0]
 	style[btn_bag,btn_armor,btn_skins;font=bold;font_size=18;content_offset=0;sound=i3_click]
 	style[craft_rcp,craft_usg;noclip=true;font_size=16;sound=i3_craft;
-	      bgimg=i3_btn9.png;bgimg_hovered=i3_btn9_hovered.png;
-	      bgimg_pressed=i3_btn9_pressed.png;bgimg_middle=4,6]
+		  bgimg=i3_btn9.png;bgimg_hovered=i3_btn9_hovered.png;
+		  bgimg_pressed=i3_btn9_pressed.png;bgimg_middle=4,6]
 	style[confirm_trash_yes,confirm_trash_no,set_home;noclip=true;font_size=16;
-	      bgimg=i3_btn9.png;bgimg_hovered=i3_btn9_hovered.png;
-	      bgimg_pressed=i3_btn9_pressed.png;bgimg_middle=4,6]
+		  bgimg=i3_btn9.png;bgimg_hovered=i3_btn9_hovered.png;
+		  bgimg_pressed=i3_btn9_pressed.png;bgimg_middle=4,6]
 	style[confirm_trash_yes;sound=i3_trash]
 ]],
 PNG.slot,
 PNG.search_outline,
-PNG.exit,           PNG.exit_hover,
-PNG.cancel,         PNG.cancel_hover,
-PNG.prev,           PNG.prev_hover,
-PNG.next,           PNG.next_hover,
-PNG.add,            PNG.add_hover,
-PNG.edit,           PNG.edit_hover)
+PNG.exit,		   PNG.exit_hover,
+PNG.cancel,		 PNG.cancel_hover,
+PNG.prev,		   PNG.prev_hover,
+PNG.next,		   PNG.next_hover,
+PNG.add,			PNG.add_hover,
+PNG.edit,		   PNG.edit_hover)
 
 local fs_elements = {
 	label = "label[%f,%f;%s]",

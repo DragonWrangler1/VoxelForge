@@ -81,7 +81,7 @@ function i3.register_craft(def)
 		end
 
 		for symbol in gmatch(concat(def.grid), ".") do
-			c++
+			c = c + 1
 			def.items[c] = def.key[symbol]
 		end
 	else
@@ -105,7 +105,7 @@ function i3.register_craft(def)
 
 		for _, line in ipairs(lines) do
 			for _, v in ipairs(line) do
-				c++
+				c = c + 1
 				def.items[c] = clean_name(v)
 			end
 		end
@@ -398,11 +398,11 @@ function i3.add_waypoint(name, def)
 		pos   = pos_to_str(def.pos, 1),
 		color = def.color,
 		image = def.image,
-		id    = id,
+		id	= id,
 	})
 
 	if data.subcat == 5 then
-		data.scrbar_inv += 1000
+		data.scrbar_inv = data.scrbar_inv + (1000)
 	end
 
 	i3.set_fs(player)

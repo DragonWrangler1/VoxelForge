@@ -1,23 +1,4 @@
-🟫 Pre-Classic – Foundation Prototype
 
-    🔧 Goal: Basic terrain, movement, building, and UI. This is the engine test phase.
-
-Features:
-
-    Flat or basic terrain generation (single biome)
-
-    Player movement and physics
-
-    Place and break basic blocks
-
-    Basic UI (hotbar, inventory with a few blocks)
-
-    Slick texture pack integration (start building the visual style)
-
-    Modular architecture setup for easy expansion later
-
-Playable?
-✅ Yes — "block place/break demo with early textures"
 🟫 Classic – Creative Sandbox
 
     🧱 Goal: Introduce creative mode and simple building tools

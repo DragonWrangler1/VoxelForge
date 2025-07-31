@@ -22,12 +22,12 @@ minetest.register_on_joinplayer(function(player)
 end)
 
 minetest.register_on_joinplayer(function(player)
-    -- Override default physics
-    player:set_physics_override({
-        speed = 1.1,         -- Slightly faster movement
-        jump = 1.1,          -- Slightly higher jump
-        gravity = 1.0,       -- Normal gravity
-        sneak = true,
-        sneak_glitch = false,
-    })
+	-- Override default physics
+	player:set_physics_override({
+		speed = 1.1,		 -- Slightly faster movement
+		jump = 1.1,		  -- Slightly higher jump
+		gravity = 1.0,	   -- Normal gravity
+		sneak = true,
+		sneak_glitch = false,
+	})
 end)

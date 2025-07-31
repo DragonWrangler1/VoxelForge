@@ -2,9 +2,6 @@
 .vscode/
 .idea/
 
-# Zencoder files
-.zencoder/
-
 # Python cache
 __pycache__/
 *.pyc
